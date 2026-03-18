@@ -11,30 +11,34 @@ document.addEventListener("DOMContentLoaded", function() {
   if (pwInput) {
     pwInput.addEventListener("input", function() {
       const p = this.value;
-      let score = 0;
-      if (p.length >= 6) score++;
-      if (p.length >= 10) score++;
-      if (/[a-z]/.test(p) && /[A-Z]/.test(p)) score++;
-      if (/\d/.test(p)) score++;
-      if (/[^a-zA-Z0-9]/.test(p)) score++;
+      const score = (typeof PageUtils !== "undefined" && PageUtils.calcPasswordStrengthScore)
+        ? PageUtils.calcPasswordStrengthScore(p)
+        : 0;
       const el = document.getElementById("passwordStrength");
       if (el) {
         el.classList.remove("weak","medium","strong");
         const bars = el.querySelectorAll(".strength-bar");
         const text = el.querySelector(".strength-text");
-        bars.forEach((b,i)=>{ b.style.background = i < score ? (score<=2?"#ef4444":score<=3?"#f59e0b":"#22c55e") : "transparent"; });
-        text.textContent = p.length ? (score<=2?"חלשה":score<=3?"בינונית":"חזקה") : "";
+        const color = (typeof PageUtils !== "undefined" && PageUtils.getPasswordStrengthColor)
+          ? PageUtils.getPasswordStrengthColor(score)
+          : (score<=2?"#ef4444":score<=3?"#f59e0b":"#22c55e");
+        bars.forEach((b,i)=>{ b.style.background = i < score ? color : "transparent"; });
+        text.textContent = (typeof PageUtils !== "undefined" && PageUtils.getPasswordStrengthLabel)
+          ? PageUtils.getPasswordStrengthLabel(score, !!p.length)
+          : (p.length ? (score<=2?"חלשה":score<=3?"בינונית":"חזקה") : "");
       }
     });
   }
   // אם המשתמש כבר מחובר – מעבר ישיר, בלי טופס
   const loggedUser = typeof AUTH !== "undefined" && AUTH.getLoggedUser ? AUTH.getLoggedUser() : null;
   if (loggedUser) {
-    const params = new URLSearchParams(window.location.search);
-    const returnTo = params.get("return") || "index";
-    if (returnTo === "ttt") window.location.href = "../games/tic-tac-toe/index.html";
-    else if (returnTo === "snake") window.location.href = "../games/snake/index.html";
-    else window.location.href = "../home/index.html";
+    const returnTo = (typeof PageUtils !== "undefined" && PageUtils.getReturnTo)
+      ? PageUtils.getReturnTo(window.location.search)
+      : "index";
+    const href = (typeof PageUtils !== "undefined" && PageUtils.getHrefForReturnTo)
+      ? PageUtils.getHrefForReturnTo(returnTo)
+      : "../home/index.html";
+    window.location.href = href;
     return;
   }
 
@@ -46,19 +50,17 @@ document.addEventListener("DOMContentLoaded", function() {
   if (!signinFormEl || !signupFormEl) return;
 
   function getReturnUrl() {
-    const params = new URLSearchParams(window.location.search);
-    return params.get("return") || "index";
+    return (typeof PageUtils !== "undefined" && PageUtils.getReturnTo)
+      ? PageUtils.getReturnTo(window.location.search)
+      : "index";
   }
 
   function redirectAfterLogin() {
     const returnTo = getReturnUrl();
-    if (returnTo === "ttt") {
-      window.location.href = "../games/tic-tac-toe/index.html";
-    } else if (returnTo === "snake") {
-      window.location.href = "../games/snake/index.html";
-    } else {
-      window.location.href = "../home/index.html";
-    }
+    const href = (typeof PageUtils !== "undefined" && PageUtils.getHrefForReturnTo)
+      ? PageUtils.getHrefForReturnTo(returnTo)
+      : "../home/index.html";
+    window.location.href = href;
   }
 
   // מעבר בין טאבים

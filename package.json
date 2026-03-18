@@ -9,10 +9,12 @@
     "build:vite": "vite build",
     "start": "vite preview --open",
     "preview": "vite preview",
+    "serve:dist": "npx http-server dist -p 4173 -c-1",
     "test": "vitest run",
     "test:ui": "vitest --ui",
     "test:watch": "vitest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:e2e:dist": "powershell -NoProfile -Command \"npm run build; $env:PW_BASE_URL='http://localhost:4173'; $env:PW_WEB_SERVER_COMMAND='npm run serve:dist'; npx playwright test\""
   },
   "devDependencies": {
     "vite": "^6.0.1",
