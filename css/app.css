@@ -23,6 +23,127 @@ html {
   --app-border: rgba(0,0,0,0.1);
 }
 
+/* === בסיס גלובלי: רספונסיביות + UX רגוע + עקביות === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Heebo", system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+  background: var(--app-bg);
+  color: var(--app-text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+:root,
+.theme-dark {
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+
+  /* Radius */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+
+  /* Shadows (calm) */
+  --shadow-sm: 0 6px 18px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 14px 40px rgba(0, 0, 0, 0.35);
+
+  /* Surfaces */
+  --surface-1: rgba(255, 255, 255, 0.04);
+  --surface-2: rgba(0, 0, 0, 0.35);
+  --surface-border: var(--app-border);
+
+  /* Brand */
+  --brand: #6366f1;
+  --brand-strong: #4f46e5;
+
+  /* Tap targets */
+  --tap-min: 44px;
+}
+
+.theme-light {
+  --surface-1: rgba(0, 0, 0, 0.04);
+  --surface-2: rgba(255, 255, 255, 0.8);
+  --shadow-sm: 0 6px 18px rgba(0, 0, 0, 0.12);
+  --shadow-md: 0 14px 40px rgba(0, 0, 0, 0.18);
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.app-btn {
+  min-height: var(--tap-min);
+  min-width: var(--tap-min);
+  padding: 0.85rem 1.25rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--surface-border);
+  background: var(--surface-1);
+  color: inherit;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.app-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow-sm);
+}
+
+.theme-light .app-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.app-btn:active {
+  transform: translateY(1px);
+}
+
+.app-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.35);
+}
+
+@media (max-width: 600px) {
+  body {
+    line-height: 1.65;
+  }
+}
+
 .theme-light .bg-pattern {
   background: 
     radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.12), transparent),

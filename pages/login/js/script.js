@@ -49,6 +49,21 @@ document.addEventListener("DOMContentLoaded", function() {
   const signupFormEl = signupForm && signupForm.querySelector("form");
   if (!signinFormEl || !signupFormEl) return;
 
+  function setActiveTab(tab) {
+    tabBtns.forEach(function (b) {
+      const isActive = b.getAttribute("data-tab") === tab;
+      b.classList.toggle("active", isActive);
+      b.setAttribute("aria-selected", isActive ? "true" : "false");
+      b.tabIndex = isActive ? 0 : -1;
+    });
+
+    const showSignin = tab === "signin";
+    signinForm.classList.toggle("active", showSignin);
+    signupForm.classList.toggle("active", !showSignin);
+    signinForm.toggleAttribute("hidden", !showSignin);
+    signupForm.toggleAttribute("hidden", showSignin);
+  }
+
   function getReturnUrl() {
     return (typeof PageUtils !== "undefined" && PageUtils.getReturnTo)
       ? PageUtils.getReturnTo(window.location.search)
@@ -67,24 +82,12 @@ document.addEventListener("DOMContentLoaded", function() {
   tabBtns.forEach(function(btn) {
     btn.addEventListener("click", function() {
       const tab = btn.getAttribute("data-tab");
-      
-      tabBtns.forEach(function(b) {
-        b.classList.remove("active");
-        b.setAttribute("aria-selected", "false");
-      });
-      btn.classList.add("active");
-      btn.setAttribute("aria-selected", "true");
-
-      signinForm.classList.remove("active");
-      signupForm.classList.remove("active");
-
-      if (tab === "signin") {
-        signinForm.classList.add("active");
-      } else {
-        signupForm.classList.add("active");
-      }
+      setActiveTab(tab);
     });
   });
+
+  // Ensure correct initial visibility (in case HTML/CSS changes)
+  setActiveTab(document.querySelector(".tab-btn.active")?.getAttribute("data-tab") || "signin");
 
   function showMsg(msg, type) {
     if (typeof Toast !== "undefined") {

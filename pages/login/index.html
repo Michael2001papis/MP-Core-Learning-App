@@ -39,16 +39,18 @@ Source: https://github.com/Michael2001papis/GssWuoly.git | עודכן: 2025
     </div>
   </div>
   <div class="login-wrapper">
-    <p class="demo-disclaimer" role="alert">⚠️ דמו: אימות מקומי לצורכי הדגמה בלבד (Client-side only). נתונים נשמרים בדפדפן – אל תשתמשו בסיסמאות אמיתיות.</p>
     <div class="login-box">
+      <div class="demo-disclaimer" role="alert" aria-live="polite">
+        <strong>דמו:</strong> אימות מקומי לצורכי הדגמה בלבד (Client-side only). הנתונים נשמרים בדפדפן — אל תשתמשו בסיסמאות אמיתיות.
+      </div>
       <!-- כפתורי מעבר -->
       <div class="tab-buttons" role="tablist" aria-label="בחירת טופס">
-        <button type="button" class="tab-btn active" role="tab" aria-selected="true" data-tab="signin" id="tab-signin">התחברות</button>
-        <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="signup" id="tab-signup">הרשמה</button>
+        <button type="button" class="tab-btn active" role="tab" aria-selected="true" aria-controls="signin-form" data-tab="signin" id="tab-signin">התחברות</button>
+        <button type="button" class="tab-btn" role="tab" aria-selected="false" aria-controls="signup-form" data-tab="signup" id="tab-signup">הרשמה</button>
       </div>
 
       <!-- טופס התחברות -->
-      <div id="signin-form" class="form-panel active">
+      <div id="signin-form" class="form-panel active" role="tabpanel" aria-labelledby="tab-signin">
         <h1>ברוך הבא!</h1>
         <p class="subtitle">התחבר עם חשבון קיים</p>
         <form>
@@ -60,7 +62,7 @@ Source: https://github.com/Michael2001papis/GssWuoly.git | עודכן: 2025
       </div>
 
       <!-- טופס הרשמה -->
-      <div id="signup-form" class="form-panel">
+      <div id="signup-form" class="form-panel" role="tabpanel" aria-labelledby="tab-signup" hidden>
         <h1>שלום!</h1>
         <p class="subtitle">הצטרף אלינו – צור חשבון חדש</p>
         <form>
