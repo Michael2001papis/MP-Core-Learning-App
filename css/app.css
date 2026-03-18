@@ -1,0 +1,706 @@
+/**
+ * © 2025–2026 מיכאל פפיסמדוב. כל הזכויות שמורות. GssWuoly (Game Hub).
+ * Do not copy / do not redistribute.
+ */
+/**
+ * עיצוב משותף: שעון, מצב בהיר/כהה, הגדרות נגישות
+ */
+html {
+  overflow-x: hidden;
+}
+
+:root, .theme-dark {
+  --app-bg: #0f0f14;
+  --app-text: #f8fafc;
+  --app-muted: #94a3b8;
+  --app-border: rgba(255,255,255,0.08);
+}
+
+.theme-light {
+  --app-bg: #f1f5f9;
+  --app-text: #0f172a;
+  --app-muted: #64748b;
+  --app-border: rgba(0,0,0,0.1);
+}
+
+.theme-light .bg-pattern {
+  background: 
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.12), transparent),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(34, 197, 94, 0.06), transparent),
+    radial-gradient(ellipse 50% 30% at 0% 80%, rgba(245, 158, 11, 0.06), transparent) !important;
+}
+
+.theme-light body {
+  background: var(--app-bg) !important;
+  color: var(--app-text) !important;
+}
+
+.theme-light .game-card {
+  background: linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%) !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+
+.theme-light .game-card p,
+.theme-light .subtitle {
+  color: var(--app-muted) !important;
+}
+.theme-light .container h1,
+.theme-light header h1 {
+  background: linear-gradient(135deg, #0f172a 0%, #64748b 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+.theme-light html,
+.theme-light body {
+  background: var(--app-bg) !important;
+  color: var(--app-text) !important;
+}
+
+/* שעון + תפריט עליון */
+.app-topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  min-height: 52px;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  z-index: 200;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--app-border);
+}
+
+.theme-light .app-topbar {
+  background: rgba(255,255,255,0.7);
+}
+
+.app-icon-btn:focus-visible,
+.back-btn-mini:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(99,102,241,0.5);
+}
+
+
+#appClock {
+  font-size: 0.9rem;
+  color: var(--app-muted);
+  font-weight: 500;
+}
+
+.app-topbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+/* מובייל: מניעת חיתוכים – הטופ־בר יכול לרדת שורה */
+@media (max-width: 600px) {
+  .app-topbar {
+    padding: 0.5rem 0.6rem;
+    gap: 0.4rem;
+  }
+  .app-topbar-actions {
+    gap: 0.4rem;
+  }
+  .app-icon-btn {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .app-topbar {
+    padding: 0.4rem 0.5rem;
+  }
+  .app-icon-btn {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    min-height: 38px;
+    font-size: 1rem;
+  }
+  #appClock { font-size: 0.8rem; }
+}
+
+.app-icon-btn {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.08);
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.2s;
+}
+
+.app-icon-btn:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+.back-btn-mini {
+  text-decoration: none;
+  color: inherit;
+  font-size: 1.2rem;
+}
+
+.theme-light .app-icon-btn {
+  background: rgba(0,0,0,0.06);
+}
+
+.theme-light .app-icon-btn:hover {
+  background: rgba(0,0,0,0.1);
+}
+
+.avatar-btn-mini {
+  font-size: 1.4rem !important;
+}
+
+/* בחירת אווטאר */
+.avatar-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.avatar-opt {
+  width: 44px;
+  height: 44px;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  border: 2px solid rgba(255,255,255,0.2);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.avatar-opt:hover {
+  background: rgba(99,102,241,0.4);
+  border-color: rgba(99,102,241,0.8);
+}
+
+.theme-light .avatar-opt {
+  background: rgba(0,0,0,0.06);
+  border-color: rgba(0,0,0,0.15);
+}
+
+.theme-light .avatar-opt:hover {
+  background: rgba(99,102,241,0.2);
+  border-color: rgba(99,102,241,0.5);
+}
+
+/* כפתור עוד + תפריט נפתח */
+.more-menu-wrap {
+  position: relative;
+}
+.more-btn {
+  min-width: 56px !important;
+  min-height: 44px !important;
+  width: auto !important;
+  padding: 0 0.75rem !important;
+  font-size: 0.95rem !important;
+  font-weight: 600;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.more-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  left: auto;
+  min-width: 160px;
+  max-width: calc(100vw - 1.5rem);
+  padding: 0.5rem 0;
+  background: var(--app-bg);
+  border: 1px solid var(--app-border);
+  border-radius: 14px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+  z-index: 300;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+}
+.more-dropdown.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.more-dropdown a {
+  display: block;
+  padding: 0.7rem 1.25rem;
+  color: inherit;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: background 0.15s, color 0.15s;
+  text-align: right;
+}
+.more-dropdown a:hover {
+  background: rgba(255,255,255,0.08);
+}
+.more-dropdown a:focus-visible {
+  outline: none;
+  background: rgba(99,102,241,0.2);
+}
+.theme-light .more-dropdown {
+  background: #fff;
+  border-color: rgba(0,0,0,0.1);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.15);
+}
+.theme-light .more-dropdown a:hover {
+  background: rgba(0,0,0,0.06);
+}
+
+/* טאצ' - אזורי מגע מספיקים למובייל */
+@media (max-width: 600px) {
+  .more-btn {
+    min-height: 44px !important;
+    padding: 0 1rem !important;
+  }
+  .more-dropdown a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 0.85rem 1.25rem;
+  }
+}
+
+/* חלון הגדרות נגישות */
+#accessibilityModal,
+.accessibility-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+#accessibilityModal.active,
+.accessibility-modal.active {
+  display: flex;
+}
+
+.accessibility-content {
+  background: var(--app-bg);
+  border: 1px solid var(--app-border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  max-width: 400px;
+  width: 100%;
+}
+
+.accessibility-content h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+}
+.accessibility-content .a11y-intro {
+  font-size: 0.9rem;
+  color: var(--app-muted);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.accessibility-content label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+  min-height: 44px;
+  padding: 0.25rem 0;
+  touch-action: manipulation;
+}
+
+.accessibility-content input[type="checkbox"] {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  min-height: 24px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.accessibility-content .btn-close-modal {
+  margin-top: 1.25rem;
+  padding: 0.65rem 1.5rem;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid var(--app-border);
+  border-radius: 12px;
+  color: inherit;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  width: 100%;
+}
+
+.accessibility-content .btn-close-modal:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+.accessibility-section {
+  margin-bottom: 1rem;
+}
+
+.accessibility-section h4 {
+  font-size: 0.9rem;
+  color: var(--app-muted);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+/* נגישות - חלים על כל האתר */
+.a11y-big-text body,
+.a11y-big-text .game-card,
+.a11y-big-text .container,
+.a11y-big-text .form-panel,
+.a11y-big-text .login-box {
+  font-size: 1.15em !important;
+}
+
+.a11y-big-text h1 { font-size: 1.4em !important; }
+.a11y-big-text h2 { font-size: 1.3em !important; }
+
+.a11y-high-contrast {
+  --app-bg: #0a0a0f !important;
+  --app-text: #ffffff !important;
+  --app-muted: #cbd5e1 !important;
+}
+
+.a11y-high-contrast .game-card,
+.a11y-high-contrast .form-panel input,
+.a11y-high-contrast button {
+  border-width: 2px !important;
+  border-color: rgba(255,255,255,0.3) !important;
+}
+
+.a11y-reduce-motion *,
+.a11y-reduce-motion *::before,
+.a11y-reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.05s !important;
+}
+
+.a11y-focus-visible *:focus-visible {
+  outline: 3px solid #6366f1 !important;
+  outline-offset: 2px !important;
+}
+
+.a11y-spacing body,
+.a11y-spacing .form-panel,
+.a11y-spacing .game-card {
+  line-height: 1.8 !important;
+}
+
+.a11y-spacing .form-panel input,
+.a11y-spacing button,
+.a11y-spacing .app-icon-btn {
+  padding: 0.9rem 1.25rem !important;
+}
+
+/* נגישות מורחבת – תמיכה מלאה */
+.a11y-large-cursor,
+.a11y-large-cursor * {
+  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><circle cx="16" cy="16" r="14" fill="black" stroke="white" stroke-width="2"/></svg>') 16 16, auto !important;
+}
+
+.a11y-underline-links a {
+  text-decoration: underline !important;
+  text-underline-offset: 0.2em;
+}
+
+.a11y-dyslexia {
+  font-family: 'Comic Sans MS', 'Chalkboard', 'Comic Neue', sans-serif !important;
+}
+
+.a11y-dyslexia body,
+.a11y-dyslexia .game-card,
+.a11y-dyslexia .form-panel,
+.a11y-dyslexia h1, .a11y-dyslexia h2, .a11y-dyslexia h3 {
+  font-family: inherit !important;
+}
+
+/* Toast */
+#toastContainer {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 90%;
+  pointer-events: none;
+}
+.toast {
+  padding: 0.85rem 1.25rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+.toast--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.toast--success {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #fff;
+}
+.toast--error {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #fff;
+}
+.toast--info {
+  background: var(--app-bg);
+  color: var(--app-text);
+  border: 1px solid var(--app-border);
+}
+
+/* Skeleton Loader */
+.app-loader {
+  position: fixed;
+  inset: 0;
+  background: var(--app-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5000;
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+.app-loader.hidden {
+  pointer-events: none;
+  opacity: 0;
+}
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  max-width: 1100px;
+  padding: 4rem 1.5rem;
+  width: 100%;
+}
+.skeleton-card {
+  max-width: 340px;
+  min-height: 200px;
+  margin: 0 auto;
+  width: 100%;
+  border-radius: 20px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%);
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.2s ease-in-out infinite;
+}
+@keyframes skeletonShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.a11y-reduce-motion .skeleton-card {
+  animation: none;
+  background: rgba(255,255,255,0.06);
+}
+
+/* Page fade-in */
+.main-content {
+  animation: pageFadeIn 0.2s ease-out;
+}
+@keyframes pageFadeIn {
+  from { opacity: 0.94; }
+  to { opacity: 1; }
+}
+.a11y-reduce-motion .main-content {
+  animation: none;
+}
+
+/* === מצב בהיר – התאמה לכל הדפים === */
+.theme-light html,
+.theme-light body {
+  background: var(--app-bg) !important;
+  color: var(--app-text) !important;
+}
+.theme-light .page {
+  color: var(--app-text) !important;
+}
+.theme-light .page p {
+  color: var(--app-muted) !important;
+}
+.theme-light .tips-overlay {
+  background: rgba(0,0,0,0.5) !important;
+}
+.theme-light .tips-content,
+.theme-light .accessibility-content,
+.theme-light .modal-content {
+  background: #ffffff !important;
+  color: var(--app-text) !important;
+  border: 1px solid var(--app-border) !important;
+}
+.theme-light .modal {
+  background: rgba(0,0,0,0.4) !important;
+}
+.theme-light .modal-content h2,
+.theme-light .modal-content p {
+  color: var(--app-text) !important;
+}
+.theme-light .modal-content input {
+  background: #fff !important;
+  border-color: var(--app-border) !important;
+  color: var(--app-text) !important;
+}
+.theme-light .modal-close {
+  background: rgba(0,0,0,0.06) !important;
+  color: var(--app-text) !important;
+}
+.theme-light .modal-close:hover {
+  background: rgba(0,0,0,0.1) !important;
+}
+.theme-light .social-icons .icons {
+  border-color: var(--app-border) !important;
+  color: var(--app-text) !important;
+}
+.theme-light .form-hint,
+.theme-light .form-panel .forgot {
+  color: var(--app-muted) !important;
+}
+.theme-light .form-panel .forgot:hover {
+  color: #4f46e5 !important;
+}
+.theme-light .tips-content h2,
+.theme-light .accessibility-content h3,
+.theme-light .accessibility-content h4 {
+  color: var(--app-text) !important;
+}
+.theme-light .tips-content p,
+.theme-light .accessibility-content label {
+  color: var(--app-text) !important;
+}
+.theme-light .login-box {
+  background: linear-gradient(165deg, rgba(255,255,255,0.95) 0%, rgba(248,250,252,0.9) 100%) !important;
+  border-color: var(--app-border) !important;
+  box-shadow: 0 30px 90px rgba(0,0,0,0.1) !important;
+}
+.theme-light .form-panel h1 {
+  color: var(--app-text) !important;
+}
+.theme-light .form-panel .subtitle,
+.theme-light .form-panel span {
+  color: var(--app-muted) !important;
+}
+.theme-light .form-panel input {
+  background: #fff !important;
+  border-color: var(--app-border) !important;
+  color: var(--app-text) !important;
+}
+.theme-light .tab-buttons {
+  background: rgba(0,0,0,0.06) !important;
+}
+.theme-light .tab-btn {
+  color: var(--app-muted) !important;
+}
+.theme-light .tab-btn.active,
+.theme-light .tab-btn:hover {
+  color: var(--app-text) !important;
+}
+.theme-light .tictactoe,
+.theme-light .game-container {
+  background: transparent !important;
+}
+.theme-light .tictactoe .btn {
+  background: rgba(0,0,0,0.06) !important;
+  border-color: var(--app-border) !important;
+}
+.theme-light .snake-container h1,
+.theme-light .game-container h1 {
+  color: var(--app-text) !important;
+}
+.theme-light .game-stats,
+.theme-light .shortcuts-hint {
+  color: var(--app-muted) !important;
+}
+.theme-light #playerNames label,
+.theme-light #modeSelector label {
+  color: #b45309 !important;
+}
+.theme-light #playerNames,
+.theme-light #scoreboard,
+.theme-light #modeSelector,
+.theme-light #victoryTable {
+  background: rgba(0,0,0,0.04) !important;
+  border-color: var(--app-border) !important;
+}
+.theme-light #playerNames input,
+.theme-light #modeSelector select {
+  background: #fff !important;
+  border-color: var(--app-border) !important;
+  color: var(--app-text) !important;
+}
+.theme-light .start-overlay .overlay-inner {
+  background: #fff !important;
+  color: var(--app-text) !important;
+  border: 1px solid var(--app-border) !important;
+}
+.theme-light #leaderboardBox {
+  background: rgba(0,0,0,0.04) !important;
+  border-color: var(--app-border) !important;
+}
+.theme-light #leaderboardBox h2 {
+  color: var(--app-text) !important;
+}
+.theme-light .btn-close-modal {
+  background: rgba(0,0,0,0.06) !important;
+  border-color: var(--app-border) !important;
+  color: var(--app-text) !important;
+}
+.theme-light .err-page .err-msg {
+  color: var(--app-muted) !important;
+}
+.theme-light .err-links a {
+  background: rgba(0,0,0,0.06) !important;
+  color: var(--app-text) !important;
+  border-color: var(--app-border) !important;
+}
+.theme-light .back {
+  background: rgba(0,0,0,0.08) !important;
+  color: var(--app-text) !important;
+}
+.theme-light .back:hover {
+  background: rgba(0,0,0,0.12) !important;
+}
+
+/* Footer בעלות – גלוי בכל הדפים */
+.app-copyright-footer {
+  text-align: center;
+  padding: 1rem 1.5rem;
+  color: var(--app-muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--app-border);
+  margin-top: 2rem;
+}

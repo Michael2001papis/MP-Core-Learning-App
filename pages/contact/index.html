@@ -1,0 +1,59 @@
+<!--
+@license GssWuoly (Game Hub)
+© 2025–2026 מיכאל פפיסמדוב. כל הזכויות שמורות. אין להעתיק/לשכפל/להפיץ ללא אישור בכתב.
+Source: https://github.com/Michael2001papis/GssWuoly.git | עודכן: 2025
+-->
+<!DOCTYPE html>
+<html lang="he" dir="rtl" data-gsswuoly="mp2025">
+<head>
+  <script>(function(){var t=localStorage.getItem("gameHubTheme")||"dark";document.documentElement.classList.add("theme-"+t);try{var a=JSON.parse(localStorage.getItem("gameHubAccessibility")||"{}");var r=document.documentElement;if(a.bigText)r.classList.add("a11y-big-text");if(a.highContrast)r.classList.add("a11y-high-contrast");if(a.reduceMotion)r.classList.add("a11y-reduce-motion");if(a.focusVisible)r.classList.add("a11y-focus-visible");if(a.spacing)r.classList.add("a11y-spacing");if(a.largeCursor)r.classList.add("a11y-large-cursor");if(a.underlineLinks)r.classList.add("a11y-underline-links");if(a.dyslexiaFont)r.classList.add("a11y-dyslexia");}catch(e){}})();</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="צור קשר - Game Hub">
+  <title>צור קשר | Game Hub</title>
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="manifest" href="../../manifest.json">
+  <link rel="stylesheet" href="../../css/app.css">
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="../../js/auth.js"></script>
+  <script src="../../js/analytics.js"></script>
+  <script src="../../js/sounds.js"></script>
+  <script src="../../js/toast.js"></script>
+  <script src="../../js/standalone.js"></script>
+  <script src="../../js/app-common.js"></script>
+  <style>
+    body{font-family:'Heebo',sans-serif;background:#0f0f14;color:#f8fafc;min-height:100vh;margin:0;padding:5rem 1.5rem 4rem}
+    .page{max-width:720px;margin:0 auto}
+    h1{font-size:2rem;margin-bottom:1.5rem}
+    p{line-height:1.8;color:#94a3b8;margin-bottom:1rem}
+    .back{display:inline-block;margin-bottom:2rem;padding:0.5rem 1rem;background:rgba(255,255,255,0.1);color:#fff;text-decoration:none;border-radius:8px}
+    .back:hover{background:rgba(255,255,255,0.2)}
+  </style>
+</head>
+<body>
+  <div class="app-topbar">
+    <span id="appClock"></span>
+    <div class="app-topbar-actions">
+      <a href="../home/index.html" class="app-icon-btn back-btn-mini" aria-label="חזרה">←</a>
+      <button type="button" class="app-icon-btn" id="themeBtn" title="מצב תאורה" aria-label="תאורה">🌙</button>
+      <button type="button" class="app-icon-btn" id="settingsBtn" title="הגדרות" aria-label="הגדרות">⚙</button>
+    </div>
+  </div>
+  <div id="accessibilityModal" class="accessibility-modal">
+    <div class="accessibility-content">
+      <h3>♿ הגדרות נגישות</h3>
+      <div class="accessibility-section"><h4>תצוגה</h4><label><input type="checkbox" id="optBigText"> טקסט מוגדל</label><label><input type="checkbox" id="optHighContrast"> ניגודיות גבוהה</label><label><input type="checkbox" id="optSpacing"> ריווח מוגבר</label><label><input type="checkbox" id="optUnderlineLinks"> קו תחתון לקישורים</label><label><input type="checkbox" id="optDyslexiaFont"> גופן לדיסלקסיה</label></div>
+      <div class="accessibility-section"><h4>אינטראקציה</h4><label><input type="checkbox" id="optReduceMotion"> הפחתת אנימציות</label><label><input type="checkbox" id="optFocusVisible"> הדגשת פוקוס מקלדת</label><label><input type="checkbox" id="optLargeCursor"> סמן עכבר מוגדל</label></div>
+      <button type="button" class="btn-close-modal" onclick="document.getElementById('accessibilityModal').classList.remove('active')">סגור</button>
+    </div>
+  </div>
+  <div class="page main-content">
+    <h1>צור קשר</h1>
+    <p>לשאלות, הצעות או תמיכה – אנא פנה דרך האימייל שלך או הצטרף לקהילה.</p>
+  </div>
+  <footer class="app-copyright-footer">© 2025–2026 מיכאל פפיסמדוב. כל הזכויות שמורות.</footer>
+  <script>
+    if(typeof APP!=="undefined"){APP.init();APP.updateActivity();}
+  </script>
+</body>
+</html>

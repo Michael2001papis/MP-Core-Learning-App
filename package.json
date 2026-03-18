@@ -1,0 +1,24 @@
+{
+  "name": "GssWuoly",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "node build-static.js",
+    "build:vite": "vite build",
+    "start": "vite preview --open",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:ui": "vitest --ui",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "vite": "^6.0.1",
+    "vitest": "^2.0.0",
+    "@vitest/ui": "^2.0.0",
+    "jsdom": "^25.0.0",
+    "@playwright/test": "^1.49.0"
+  }
+}

@@ -1,0 +1,248 @@
+<!--
+@license GssWuoly (Game Hub)
+© 2025–2026 מיכאל פפיסמדוב. כל הזכויות שמורות. אין להעתיק/לשכפל/להפיץ ללא אישור בכתב.
+Source: https://github.com/Michael2001papis/GssWuoly.git | עודכן: 2025
+-->
+<!DOCTYPE html>
+<html lang="he" dir="rtl" data-gsswuoly="mp2025">
+<head>
+  <script>
+    (function(){
+      var t=localStorage.getItem("gameHubTheme")||"dark";
+      document.documentElement.classList.add("theme-"+t);
+      try{
+        var a=JSON.parse(localStorage.getItem("gameHubAccessibility")||"{}");
+        var r=document.documentElement;
+        if(a.bigText)r.classList.add("a11y-big-text");
+        if(a.highContrast)r.classList.add("a11y-high-contrast");
+        if(a.reduceMotion)r.classList.add("a11y-reduce-motion");
+        if(a.focusVisible)r.classList.add("a11y-focus-visible");
+        if(a.spacing)r.classList.add("a11y-spacing");
+        if(a.largeCursor)r.classList.add("a11y-large-cursor");
+        if(a.underlineLinks)r.classList.add("a11y-underline-links");
+        if(a.dyslexiaFont)r.classList.add("a11y-dyslexia");
+      }catch(e){}
+    })();
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f0f14">
+  <meta name="description" content="Game Hub - פלטפורמת משחקים איכותית. איקס עיגול, נחש ועוד. חוויית משחק עם התחברות, טבלאות מובילים והעדפות משתמש.">
+  <meta name="keywords" content="משחקים, איקס עיגול, נחש, Game Hub, משחקים אונליין">
+  <meta property="og:title" content="Game Hub | פלטפורמת משחקים">
+  <meta property="og:description" content="משחקים איכותיים - איקס עיגול, נחש. התחבר, שחק וצבור נקודות.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="he_IL">
+  <title>Game Hub | בחירת משחק</title>
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <link rel="manifest" href="../../manifest.json">
+  <link rel="stylesheet" href="../../css/app.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    a, button { touch-action: manipulation; }
+    :root { --bg-dark: #0f0f14; --bg-card: rgba(255, 255, 255, 0.03); --accent-ttt: #f59e0b; --accent-snake: #22c55e; --accent-login: #6366f1; --text: #f8fafc; --text-muted: #94a3b8; }
+    body { font-family: 'Heebo', sans-serif; background: var(--bg-dark); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+    .bg-pattern { position: fixed; inset: 0; background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.18), transparent), radial-gradient(ellipse 60% 40% at 100% 100%, rgba(34, 197, 94, 0.1), transparent), radial-gradient(ellipse 50% 30% at 0% 80%, rgba(245, 158, 11, 0.1), transparent); pointer-events: none; z-index: 0; animation: bgPulse 8s ease-in-out infinite; }
+    @keyframes bgPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.85; } }
+    .container { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 4rem 1.5rem 3rem; }
+    header { text-align: center; margin-bottom: 3.5rem; }
+    h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; background: linear-gradient(135deg, #fff 0%, #94a3b8 100%); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem; animation: titleShimmer 4s ease-in-out infinite; }
+    @keyframes titleShimmer { 0%, 100% { background-position: 0% center; } 50% { background-position: 100% center; } }
+    .subtitle { font-size: 1.1rem; color: var(--text-muted); font-weight: 300; }
+    .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; justify-items: center; }
+    .game-card { display: block; width: 100%; max-width: 340px; min-height: 200px; padding: 2rem; background: linear-gradient(145deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 100%); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px; text-decoration: none; color: inherit; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; position: relative; overflow: hidden; backdrop-filter: blur(10px); animation: cardFadeIn 0.2s ease-out both; }
+    .game-card:nth-child(1) { animation-delay: 0.05s; } .game-card:nth-child(2) { animation-delay: 0.12s; } .game-card:nth-child(3) { animation-delay: 0.19s; }
+    @keyframes cardFadeIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+    .game-card::before { content: ''; position: absolute; top: 0; right: 0; width: 120px; height: 120px; border-radius: 50%; opacity: 0.15; transition: transform 0.2s ease; }
+    .game-card:not(.locked)::after { content: ''; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.08) 50%, transparent 70%); transform: translateX(-100%); transition: transform 0.25s ease; pointer-events: none; }
+    .game-card:active { transform: translateY(-2px) scale(0.99); }
+    .game-card:hover { transform: translateY(-6px) scale(1.02); border-color: rgba(255, 255, 255, 0.15); box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35); }
+    .game-card:hover:not(.locked)::after { transform: translateX(100%); }
+    .game-card:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5); }
+    .game-card--ttt::before { background: var(--accent-ttt); top: -40px; right: -40px; }
+    .game-card--snake::before { background: var(--accent-snake); top: -40px; right: -40px; }
+    .game-card--login::before { background: var(--accent-login); top: -40px; right: -40px; }
+    .game-card:hover::before { transform: scale(1.1); }
+    .game-icon { font-size: 3rem; margin-bottom: 1rem; line-height: 1; transition: transform 0.2s ease; }
+    .game-card:hover .game-icon { transform: scale(1.06) rotate(-3deg); }
+    .game-card--ttt .game-icon { color: var(--accent-ttt); } .game-card--snake .game-icon { color: var(--accent-snake); } .game-card--login .game-icon { color: var(--accent-login); }
+    .game-card h2 { font-size: 1.5rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .game-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; font-weight: 300; }
+    .game-card .arrow { margin-top: 1rem; font-size: 1.2rem; opacity: 0.6; transition: transform 0.2s ease, opacity 0.2s ease; }
+    .game-card:hover .arrow { transform: translateX(-6px); opacity: 1; }
+    .user-greeting { font-size: 1.2rem; color: #4ade80; font-weight: 600; margin-top: 0.25rem; }
+    .logout-btn { display: inline-flex; align-items: center; justify-content: center; margin-top: 0.5rem; min-height: 44px; min-width: 44px; padding: 0.5rem 1.25rem; font-size: 0.9rem; background: rgba(239,68,68,0.2); color: #fca5a5; border: 1px solid rgba(239,68,68,0.4); border-radius: 12px; cursor: pointer; transition: all 0.3s ease; font-family: inherit; font-weight: 600; }
+    .logout-btn:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(239,68,68,0.5); }
+    .user-area { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; justify-content: center; margin-top: 0.5rem; }
+    .avatar-btn { width: 48px; height: 48px; border-radius: 50%; font-size: 1.8rem; background: rgba(99,102,241,0.3); border: 2px solid rgba(99,102,241,0.6); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; line-height: 1; }
+    .avatar-btn:hover { background: rgba(99,102,241,0.5); transform: scale(1.05); }
+    .avatar-picker { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0; }
+    .avatar-opt { width: 44px; height: 44px; font-size: 1.5rem; border-radius: 50%; background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.2); cursor: pointer; transition: all 0.2s; }
+    .avatar-opt:hover { background: rgba(99,102,241,0.4); border-color: rgba(99,102,241,0.8); }
+    .logout-btn:hover { background: rgba(239,68,68,0.4); color: #fff; transform: scale(1.05); }
+    .logout-btn:active { transform: scale(0.98); }
+    .game-card.locked { position: relative; }
+    .game-card .game-icon, .game-card h2, .game-card p, .game-card .arrow { position: relative; z-index: 1; }
+    .game-card.locked::after { content: '🔒 לחץ להתחברות ולשחק'; position: absolute; inset: 0; background: rgba(0,0,0,0.65); display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1.1rem; border-radius: 20px; z-index: 2; }
+    footer { text-align: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.06); color: var(--text-muted); font-size: 0.9rem; }
+    .skip-link { position: absolute; top: -100px; right: 1rem; padding: 0.75rem 1.5rem; background: var(--accent-login); color: #fff; font-weight: 600; border-radius: 12px; z-index: 1000; transition: top 0.2s; }
+    .skip-link:focus { top: 1rem; outline: none; box-shadow: 0 0 0 3px rgba(255,255,255,0.5); }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+    /* Responsive – 360 / 480 / 600 / 768 */
+    @media (max-width: 768px) {
+      .container { padding: 3rem 1rem 2rem; }
+      .games-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+      .game-card { max-width: 100%; min-height: 180px; padding: 1.5rem; }
+      .game-card h2 { font-size: 1.35rem; }
+      .game-card p { font-size: 0.9rem; }
+    }
+    @media (max-width: 600px) {
+      .container { padding: 2.5rem 0.75rem 1.5rem; }
+      h1 { font-size: 1.75rem; }
+      .subtitle { font-size: 1rem; }
+      .games-grid { gap: 1rem; }
+      .game-card { padding: 1.25rem; min-height: 160px; }
+      .game-icon { font-size: 2.5rem; }
+    }
+    @media (max-width: 480px) {
+      .container { padding: 2rem 0.5rem 1rem; }
+      h1 { font-size: 1.5rem; }
+      .game-card h2 { font-size: 1.2rem; }
+      .game-card p { font-size: 0.85rem; line-height: 1.5; }
+    }
+    @media (max-width: 360px) {
+      .container { padding: 1.5rem 0.5rem 1rem; }
+      .game-card { padding: 1rem; min-height: 140px; }
+      .game-icon { font-size: 2.2rem; }
+    }
+  </style>
+  <script src="../../js/auth.js"></script>
+  <script src="../../js/analytics.js"></script>
+  <script src="../../js/sounds.js"></script>
+  <script src="../../js/toast.js"></script>
+  <script src="../../js/standalone.js"></script>
+  <script src="../../js/app-common.js"></script>
+</head>
+<body>
+  <div id="appLoader" class="app-loader" aria-hidden="true" aria-label="טוען"><div class="skeleton-grid"><div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div></div></div>
+  <div class="app-topbar">
+    <span id="appClock"></span>
+    <div class="app-topbar-actions">
+      <button type="button" class="app-icon-btn" id="themeBtn" title="מצב בהיר/כהה" aria-label="החלף מצב תאורה">🌙</button>
+      <button type="button" class="app-icon-btn" id="settingsBtn" title="הגדרות נגישות" aria-label="הגדרות נגישות">⚙</button>
+    </div>
+  </div>
+  <div id="avatarModal" class="accessibility-modal">
+    <div class="accessibility-content">
+      <h3>בחר אווטאר</h3>
+      <div class="avatar-picker" id="avatarPicker">
+        <button type="button" class="avatar-opt" data-emoji="👤">👤</button>
+        <button type="button" class="avatar-opt" data-emoji="😊">😊</button>
+        <button type="button" class="avatar-opt" data-emoji="😎">😎</button>
+        <button type="button" class="avatar-opt" data-emoji="🎮">🎮</button>
+        <button type="button" class="avatar-opt" data-emoji="⭐">⭐</button>
+        <button type="button" class="avatar-opt" data-emoji="🐍">🐍</button>
+        <button type="button" class="avatar-opt" data-emoji="⭕">⭕</button>
+        <button type="button" class="avatar-opt" data-emoji="🚀">🚀</button>
+      </div>
+      <button type="button" class="btn-close-modal" onclick="document.getElementById('avatarModal').classList.remove('active')">סגור</button>
+    </div>
+  </div>
+  <div id="accessibilityModal" class="accessibility-modal">
+    <div class="accessibility-content">
+      <h3>♿ הגדרות נגישות</h3>
+      <p class="a11y-intro">התאמות לתמיכה בראייה, תנועה, קשב וגלישה במסך. ההגדרות נשמרות בין ביקורים.</p>
+      <div class="accessibility-section"><h4>תצוגה</h4>
+        <label><input type="checkbox" id="optBigText"> טקסט מוגדל (120%)</label>
+        <label><input type="checkbox" id="optHighContrast"> ניגודיות גבוהה (WCAG AAA)</label>
+        <label><input type="checkbox" id="optSpacing"> ריווח מוגבר בין אלמנטים</label>
+        <label><input type="checkbox" id="optUnderlineLinks"> קו תחתון לקישורים</label>
+        <label><input type="checkbox" id="optDyslexiaFont"> גופן ידידותי לדיסלקסיה</label>
+      </div>
+      <div class="accessibility-section"><h4>אינטראקציה</h4>
+        <label><input type="checkbox" id="optReduceMotion"> הפחתת אנימציות ותנועה</label>
+        <label><input type="checkbox" id="optFocusVisible"> הדגשת פוקוס מקלדת (ניווט Tab)</label>
+        <label><input type="checkbox" id="optLargeCursor"> סמן עכבר מוגדל</label>
+      </div>
+      <button type="button" class="btn-close-modal" onclick="document.getElementById('accessibilityModal').classList.remove('active')">סגור</button>
+    </div>
+  </div>
+  <a href="#main" class="skip-link">דלג לתוכן הראשי</a>
+  <div class="bg-pattern"></div>
+  <main id="main" class="container main-content">
+    <header>
+      <h1>Game Hub • משחקייה</h1>
+      <p class="subtitle">התחבר כדי לגשת למשחקים – איקס עיגול, נחש ועוד. משתמשים רשומים בלבד.</p>
+      <div class="user-area" id="userArea" style="display:none;">
+        <button type="button" class="avatar-btn" id="avatarBtn" aria-label="בחר אווטאר">👤</button>
+        <p class="user-greeting" id="userGreeting"></p>
+        <button type="button" class="logout-btn" id="logoutBtn" aria-label="התנתק מהחשבון">התנתק</button>
+      </div>
+    </header>
+    <div class="games-grid">
+      <a href="../games/tic-tac-toe/index.html" class="game-card game-card--ttt" id="cardTtt" aria-label="משחק איקס עיגול">
+        <div class="game-icon">⭕</div><h2>איקס עיגול</h2>
+        <p>Tic Tac Toe – משחק קלאסי נגד המחשב עם שמות שחקנים ולוח תוצאות</p><span class="arrow">←</span>
+      </a>
+      <a href="../games/snake/index.html" class="game-card game-card--snake" id="cardSnake" aria-label="משחק נחש">
+        <div class="game-icon">🐍</div><h2>נחש</h2>
+        <p>משחק סנייק קלאסי עם טיימר, ניקוד וטבלת מובילים</p><span class="arrow">←</span>
+      </a>
+      <a href="../login/index.html" class="game-card game-card--login" aria-label="התחברות והרשמה">
+        <div class="game-icon">🔐</div><h2 id="loginCardTitle">התחברות / הרשמה</h2>
+        <p id="loginCardDesc">התחבר כדי לשחק באיקס עיגול ונחש. אין לך חשבון? הירשם!</p><span class="arrow">←</span>
+      </a>
+    </div>
+    <footer class="app-copyright-footer"><p>© 2025–2026 מיכאל פפיסמדוב. כל הזכויות שמורות.</p></footer>
+  </main>
+  <script>
+    (function() {
+      function hideLoader() {
+        var loader = document.getElementById("appLoader");
+        if (loader) { loader.classList.add("hidden"); setTimeout(function() { loader.style.display = "none"; }, 300); }
+      }
+      hideLoader();
+      setTimeout(hideLoader, 1500);
+      try {
+        const user = typeof AUTH !== "undefined" ? AUTH.getLoggedUser() : null;
+        const userArea = document.getElementById("userArea");
+        const greeting = document.getElementById("userGreeting");
+        const avatarBtn = document.getElementById("avatarBtn");
+        const logoutBtn = document.getElementById("logoutBtn");
+        const cardTtt = document.getElementById("cardTtt");
+        const cardSnake = document.getElementById("cardSnake");
+        if (user && userArea) {
+          userArea.style.display = "flex";
+          if (avatarBtn) { avatarBtn.textContent = user.avatar || "👤"; }
+          if (greeting) greeting.textContent = "שלום, " + user.name + "!";
+          if (cardTtt) { cardTtt.classList.remove("locked"); cardTtt.href = "../games/tic-tac-toe/index.html"; cardTtt.removeAttribute("aria-disabled"); }
+          if (cardSnake) { cardSnake.classList.remove("locked"); cardSnake.href = "../games/snake/index.html"; cardSnake.removeAttribute("aria-disabled"); }
+        } else {
+          if (cardTtt) { cardTtt.classList.add("locked"); cardTtt.href = "../login/index.html"; cardTtt.setAttribute("aria-disabled", "true"); }
+          if (cardSnake) { cardSnake.classList.add("locked"); cardSnake.href = "../login/index.html"; cardSnake.setAttribute("aria-disabled", "true"); }
+        }
+        if (avatarBtn) avatarBtn.addEventListener("click", function() {
+          var m = document.getElementById("avatarModal");
+          if (m) m.classList.add("active");
+        });
+        document.querySelectorAll(".avatar-opt").forEach(function(btn) {
+          btn.addEventListener("click", function() {
+            var em = this.getAttribute("data-emoji");
+            if (typeof AUTH !== "undefined" && em) { AUTH.updateAvatar(em); if (avatarBtn) avatarBtn.textContent = em; }
+            var m = document.getElementById("avatarModal");
+            if (m) m.classList.remove("active");
+          });
+        });
+        if (logoutBtn) logoutBtn.addEventListener("click", function() { if (typeof AUTH !== "undefined") AUTH.logout(); location.reload(); });
+        if (typeof APP !== "undefined") { APP.init(); APP.updateActivity(); }
+        if ("serviceWorker" in navigator) {
+          navigator.serviceWorker.register("../../sw.js", { scope: "/" }).catch(function() {});
+        }
+      } catch (e) { console.warn("Home init:", e); }
+    })();
+  </script>
+</body>
+</html>

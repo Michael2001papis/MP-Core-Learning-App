@@ -1,0 +1,621 @@
+/**
+ * © 2025–2026 מיכאל פפיסמדוב. כל הזכויות שמורות. GssWuoly (Game Hub).
+ * Do not copy / do not redistribute.
+ */
+/**
+ * איקס עיגול – עיצוב אחיד עם סנייק
+ * מסך משחק מרכזי ומרשים, תחושת אפליקציה/מוצר
+ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+a, button, select, input {
+  touch-action: manipulation;
+}
+
+html {
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: 'Heebo', sans-serif;
+  background: linear-gradient(180deg, #0c1929 0%, #0a1628 25%, #050d1a 60%, #000000 100%);
+  color: #f8fafc;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  padding-top: 4.5rem;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+}
+
+.game-container {
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.ttt-card {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 2.5rem;
+  background: linear-gradient(160deg, rgba(12, 25, 42, 0.96) 0%, rgba(8, 18, 32, 0.98) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 24px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.02);
+}
+
+.player-badge {
+  font-size: 0.95rem;
+  color: #4ade80;
+  margin: -0.5rem 0 0.5rem;
+  display: none;
+}
+
+.game-container h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1.5rem;
+}
+
+.btn-help {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  left: auto;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  color: #94a3b8;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  line-height: 1;
+  transition: all 0.2s;
+}
+
+.btn-help:hover {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.4);
+}
+
+.btn-help:active {
+  transform: scale(0.95);
+}
+
+.btn-help:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.5);
+}
+
+#playerNames {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+}
+
+#playerNames label {
+  font-weight: 600;
+  color: #f59e0b;
+  font-size: 0.95rem;
+}
+
+#playerNames input {
+  min-height: 44px;
+  padding: 0.6rem 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  text-align: center;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+#playerNames input:focus {
+  outline: none;
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.35);
+}
+
+#playerNames input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+#scoreboard {
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-bottom: 1rem;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#scoreboard span {
+  padding: 0.5rem 1.25rem;
+  min-width: 72px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  color: #fbbf24;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.game-stats {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-bottom: 1.5rem;
+}
+
+.difficulty-inline {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.difficulty-inline label {
+  font-weight: 600;
+  color: #f59e0b;
+  font-size: 0.95rem;
+}
+
+.difficulty-inline select {
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.difficulty-inline select.hidden {
+  display: none;
+}
+
+#aiLevelLabel.hidden {
+  display: none;
+}
+
+.game-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.75rem;
+}
+
+.tictactoe {
+  background: rgba(0, 0, 0, 0.4);
+  width: 360px;
+  height: 360px;
+  display: grid;
+  grid-template-columns: repeat(3, 110px);
+  grid-template-rows: repeat(3, 110px);
+  gap: 8px;
+  padding: 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.tictactoe .btn {
+  width: 110px;
+  height: 110px;
+  min-width: 110px;
+  min-height: 110px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  font-size: 3rem;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  appearance: none;
+  position: relative;
+}
+
+.tictactoe .btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at center, rgba(245, 158, 11, 0.2) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tictactoe .btn:hover:not([class*="filled"]) {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.03);
+  border-color: rgba(245, 158, 11, 0.4);
+  box-shadow: 0 0 24px rgba(245, 158, 11, 0.15);
+}
+
+.tictactoe .btn:hover:not([class*="filled"])::before {
+  opacity: 1;
+}
+
+.tictactoe .btn:active:not([class*="filled"]) {
+  transform: scale(0.97);
+}
+
+.tictactoe .btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.5);
+}
+
+.tictactoe .btn.filled {
+  cursor: default;
+}
+
+.tictactoe .btn:has(.x) {
+  color: #f59e0b;
+  text-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+}
+
+.tictactoe .btn:has(.o) {
+  color: #22d3ee;
+  text-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
+}
+
+.tictactoe .btn .x,
+.tictactoe .btn .o {
+  display: inline-block;
+}
+
+.tictactoe .btn.win {
+  animation: winPulse 0.8s ease-in-out infinite alternate;
+  background: rgba(34, 197, 94, 0.3) !important;
+  border-color: #22c55e !important;
+}
+
+@keyframes winPulse {
+  from { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); transform: scale(1); }
+  to { box-shadow: 0 0 24px 6px rgba(34, 197, 94, 0.6); transform: scale(1.02); }
+}
+
+.tictactoe .btn.filled .x,
+.tictactoe .btn.filled .o {
+  animation: symbolPop 0.25s ease-out;
+}
+
+@keyframes symbolPop {
+  from { transform: scale(0); opacity: 0.5; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.controls-wrap {
+  margin-bottom: 1.75rem;
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.controls-wrap button {
+  min-height: 48px;
+  min-width: 120px;
+  padding: 0.9rem 1.5rem;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.controls-wrap button .btn-icon {
+  margin-left: 0.4rem;
+  font-size: 1.1em;
+}
+
+#resetBtn {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
+}
+
+#resetBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(245, 158, 11, 0.5);
+}
+
+#stopBtn {
+  background: rgba(100, 116, 139, 0.3);
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+#stopBtn:hover {
+  background: rgba(100, 116, 139, 0.4);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+#victoryTableBtn {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+}
+
+#victoryTableBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(99, 102, 241, 0.5);
+}
+
+.controls-wrap button:active {
+  transform: translateY(0);
+}
+
+.controls-wrap button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.5);
+}
+
+.victory-table-box {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 1.5rem;
+  padding: 1.5rem 1.75rem;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 18px;
+}
+
+.victory-table-box h2 {
+  margin: 0 0 1.25rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #f59e0b;
+}
+
+.victory-table-box table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.victory-table-box th,
+.victory-table-box td {
+  padding: 0.6rem 0.85rem;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.95rem;
+}
+
+.victory-table-box th {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  font-weight: 600;
+}
+
+.victory-table-box td {
+  color: #e2e8f0;
+}
+
+.shortcuts-hint {
+  font-size: 0.75rem;
+  color: #475569;
+  margin: 0;
+  padding-top: 1rem;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Sticky footer – קרדיט תמיד בתחתית */
+body .app-copyright-footer {
+  margin-top: auto;
+  flex-shrink: 0;
+  padding: 1rem 1.5rem;
+  text-align: center;
+  color: var(--app-muted, #94a3b8);
+  font-size: 0.9rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.tips-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.tips-overlay.active {
+  display: flex;
+}
+
+.tips-content {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  border-radius: 24px;
+  padding: 2rem 2.25rem;
+  max-width: 440px;
+}
+
+.tips-content h2 {
+  margin-bottom: 1rem;
+  color: #f59e0b;
+}
+
+.tips-content p {
+  margin-bottom: 1.25rem;
+  line-height: 1.6;
+}
+
+.tips-content button {
+  padding: 0.85rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tips-content button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(245, 158, 11, 0.45);
+}
+
+.accessibility-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.accessibility-modal:not(.active) {
+  display: none !important;
+}
+
+.accessibility-modal.active {
+  display: flex !important;
+}
+
+@media (max-width: 600px) {
+  body { padding-top: 5.5rem; } /* מקום לטופ־בר כשהוא נשבר לשתי שורות */
+  .ttt-card {
+    padding: 1.5rem 1rem;
+    max-width: 100%;
+  }
+
+  .game-container h1 {
+    font-size: 1.65rem;
+  }
+
+  .tictactoe {
+    width: 300px;
+    height: 300px;
+    grid-template-columns: repeat(3, 90px);
+    grid-template-rows: repeat(3, 90px);
+    gap: 6px;
+    padding: 10px;
+  }
+
+  .tictactoe .btn {
+    width: 90px;
+    height: 90px;
+    min-width: 90px;
+    min-height: 90px;
+    font-size: 2.5rem;
+  }
+
+  .victory-table-box {
+    max-width: 100%;
+  }
+
+  .controls-wrap button {
+    min-width: 100px;
+    min-height: 44px;
+    padding: 0.8rem 1.25rem;
+  }
+
+  #playerNames {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  body { padding: 0.5rem; padding-top: 4.5rem; }
+  .ttt-card { padding: 1.25rem 0.75rem; }
+  .game-container h1 { font-size: 1.5rem; }
+  #scoreboard { gap: 0.75rem; padding: 0.75rem 1rem; }
+  #scoreboard span { min-width: 60px; padding: 0.4rem 0.9rem; font-size: 0.95rem; }
+  .controls-wrap { gap: 0.75rem; flex-wrap: wrap; }
+  .controls-wrap button { min-width: 90px; }
+}
+
+@media (max-width: 360px) {
+  .ttt-card { padding: 1rem 0.5rem; }
+  .ttt-card .controls-wrap button { min-width: 80px; padding: 0.7rem 1rem; font-size: 0.9rem; }
+}
+
+@media (max-width: 400px) {
+  .tictactoe {
+    width: 270px;
+    height: 270px;
+    grid-template-columns: repeat(3, 82px);
+    grid-template-rows: repeat(3, 82px);
+    gap: 5px;
+    padding: 8px;
+  }
+
+  .tictactoe .btn {
+    width: 82px;
+    height: 82px;
+    min-width: 82px;
+    min-height: 82px;
+    font-size: 2.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .tictactoe .btn.win {
+    animation: none;
+  }
+}
