@@ -83,6 +83,10 @@ canvas {
   /* Brand */
   --brand: #6366f1;
   --brand-strong: #4f46e5;
+  --accent-login: var(--brand);
+  --accent-snake: #22c55e;
+  --accent-ttt: #f59e0b;
+  --danger: #ef4444;
 
   /* Tap targets */
   --tap-min: 44px;
@@ -118,6 +122,29 @@ textarea {
   transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+}
+
+.app-btn--primary {
+  border: none;
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-strong) 100%);
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.28);
+}
+
+.app-btn--primary:hover {
+  box-shadow: 0 14px 38px rgba(99, 102, 241, 0.34);
+}
+
+.app-btn--danger {
+  background: rgba(239, 68, 68, 0.14);
+  color: #fecaca;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+}
+
+.theme-light .app-btn--danger {
+  background: rgba(239, 68, 68, 0.08);
+  color: #991b1b;
+  border-color: rgba(239, 68, 68, 0.25);
 }
 
 .app-btn:hover {

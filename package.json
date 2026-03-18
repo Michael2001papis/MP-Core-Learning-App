@@ -10,6 +10,8 @@
     "start": "vite preview --open",
     "preview": "vite preview",
     "serve:dist": "npx http-server dist -p 4173 -c-1",
+    "report:status": "node scripts/generate-status-report.mjs",
+    "cleanup:empty-dirs": "node scripts/cleanup-empty-dirs.mjs",
     "test": "vitest run",
     "test:ui": "vitest --ui",
     "test:watch": "vitest",

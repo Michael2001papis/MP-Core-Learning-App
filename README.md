@@ -33,7 +33,7 @@
 - ✅ **מערכת התחברות מקומית** (localStorage) + timeout לאחר 10 דקות
 - ✅ **Snake:** Canvas, רמות מהירות, שמירה/Resume, מובילים, בקרי מגע למובייל
 - ✅ **Tic-Tac-Toe:** PvP + PvC (כולל Minimax ברמת "קשה"), סטטיסטיקות ושמירה
-- ✅ **בדיקות:** Vitest (Auth) + Playwright E2E (Home)
+- ✅ **בדיקות:** Vitest (Unit) + Playwright E2E (Smoke/Offline/Mobile/Galaxy + dist)
 
 ---
 
@@ -85,7 +85,11 @@
 ## משחקים (pages/games/)
 
 - **tic-tac-toe/** – משחק איקס עיגול (כולל Minimax)
+  - `css/style.css`
+  - `js/script.js`
 - **snake/** – משחק נחש (Canvas, שמירה, מובילים, מובייל)
+  - `css/style.css`
+  - `js/script.js`
 
 ---
 
@@ -130,17 +134,38 @@ npm run preview
 ## בדיקות
 
 - **Unit tests (Vitest):** מתמקדות ב־Auth (signup/signin/logout/validations)
-- **E2E (Playwright):** בדיקות בסיסיות לדף הבית + theme toggle
+- **E2E (Playwright):** smoke לכל הדפים + offline + mobile + Galaxy S22 Ultra + הרצה גם מול dist
 
 ```bash
-npm test -- --run      # Vitest
-npm run test:e2e       # Playwright (מריץ dev server אוטומטית)
+npm test               # Vitest (single run)
+npm run test:e2e        # Playwright
+npm run test:e2e:dist   # Playwright מול dist build אמיתי
 ```
 
 ### מה חשוב לדעת על הבדיקות
 
 - `auth.test.js` מבוסס על לוגיקה מקבילה ל־`auth.js`, ולכן יש צורך לשמור סנכרון בעת שינויים ב־Auth.
 - `vitest.config.js` כרגע מוציא את `pages/**` מכלל הבדיקות – כלומר אין unit tests לסקריפטים של הדפים.
+
+---
+
+## דוח מצב מהיר (TXT)
+
+אפשר לייצר “דוח מצב” מהיר בלחיצה אחת לקובץ `STATUS_REPORT.txt` (נוצר בשורש הפרויקט):
+
+```bash
+npm run report:status
+```
+
+---
+
+## ניקוי תיקיות ריקות
+
+מחיקה בטוחה של תיקיות ריקות (לא נוגע ב־`node_modules`/`.git`):
+
+```bash
+npm run cleanup:empty-dirs
+```
 
 ---
 
@@ -157,9 +182,7 @@ npm run test:e2e       # Playwright (מריץ dev server אוטומטית)
 
 `analytics.js` תומך ב־GA או Plausible, ונפתח רק אם מוגדרת תצורה מתאימה מראש (למשל משתנה גלובלי לפני טעינת הסקריפט).
 
-⚠ **ידוע:** יש פער בשם ה־API:  
-`analytics.js` מגדיר אובייקט בשם `GameHubAnalytics`, אך בסנייק קיימת ציפייה ל־`window.ANALYTICS.track`.  
-אם משתמשים ב־analytics בתוך המשחקים, מומלץ לאחד Naming כך שכולם ידברו אותו API.
+✅ **עודכן:** קיימת תאימות לאחור כך שמודולים שעדיין מצפים ל־`window.ANALYTICS.track(...)` ימשיכו לעבוד.
 
 ---
 

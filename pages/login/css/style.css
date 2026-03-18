@@ -254,10 +254,6 @@ body.login-page .app-copyright-footer {
   min-height: 44px;
   min-width: 44px;
   padding: 0.85rem 1.5rem;
-  border: none;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-  color: #fff;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;

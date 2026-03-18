@@ -1,0 +1,315 @@
+/**
+ * Home page styling (scoped) — consistent with global tokens.
+ */
+
+body.home-page {
+  min-height: 100vh;
+}
+
+body.home-page .bg-pattern {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.18), transparent),
+    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(34, 197, 94, 0.1), transparent),
+    radial-gradient(ellipse 50% 30% at 0% 80%, rgba(245, 158, 11, 0.1), transparent);
+  pointer-events: none;
+  z-index: 0;
+  animation: homeBgPulse 8s ease-in-out infinite;
+}
+
+@keyframes homeBgPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.86; }
+}
+
+body.home-page .container {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 3rem;
+}
+
+body.home-page header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+body.home-page h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--app-text) 0%, var(--app-muted) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+  animation: homeTitleShimmer 4s ease-in-out infinite;
+}
+
+@keyframes homeTitleShimmer {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+}
+
+body.home-page .subtitle {
+  font-size: 1.05rem;
+  color: var(--app-muted);
+  font-weight: 300;
+}
+
+body.home-page .user-area {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 0.75rem;
+}
+
+body.home-page .avatar-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-size: 1.8rem;
+  background: rgba(99, 102, 241, 0.25);
+  border: 2px solid rgba(99, 102, 241, 0.5);
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+body.home-page .avatar-btn:hover {
+  background: rgba(99, 102, 241, 0.38);
+  transform: scale(1.04);
+}
+
+body.home-page .user-greeting {
+  font-size: 1.1rem;
+  color: #4ade80;
+  font-weight: 700;
+  margin: 0;
+}
+
+body.home-page .logout-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--tap-min);
+  padding: 0.6rem 1.15rem;
+  font-size: 0.9rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+  font-weight: 700;
+}
+
+body.home-page .logout-btn:hover {
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+body.home-page .logout-btn:active { transform: translateY(0); }
+
+body.home-page .games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  justify-items: center;
+}
+
+body.home-page .game-card {
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  min-height: 200px;
+  padding: 1.75rem;
+  background: linear-gradient(145deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.02) 100%);
+  border: 1px solid var(--app-border);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  animation: homeCardFadeIn 0.2s ease-out both;
+}
+
+body.home-page .game-card:nth-child(1) { animation-delay: 0.05s; }
+body.home-page .game-card:nth-child(2) { animation-delay: 0.12s; }
+body.home-page .game-card:nth-child(3) { animation-delay: 0.19s; }
+
+@keyframes homeCardFadeIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+body.home-page .game-card::before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 120px;
+  height: 120px;
+  border-radius: 999px;
+  opacity: 0.16;
+  transition: transform 0.18s ease;
+}
+
+body.home-page .game-card:not(.locked)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.08) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.22s ease;
+  pointer-events: none;
+}
+
+body.home-page .game-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: var(--shadow-md);
+}
+
+.theme-light body.home-page .game-card:hover {
+  border-color: rgba(0, 0, 0, 0.14);
+}
+
+body.home-page .game-card:hover::before { transform: scale(1.08); }
+body.home-page .game-card:hover:not(.locked)::after { transform: translateX(100%); }
+body.home-page .game-card:active { transform: translateY(-2px); }
+
+body.home-page .game-card:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.45);
+}
+
+body.home-page .game-card--ttt::before { background: var(--accent-ttt); }
+body.home-page .game-card--snake::before { background: var(--accent-snake); }
+body.home-page .game-card--login::before { background: var(--accent-login); }
+
+body.home-page .game-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  line-height: 1;
+  transition: transform 0.18s ease;
+}
+
+body.home-page .game-card:hover .game-icon {
+  transform: scale(1.06) rotate(-3deg);
+}
+
+body.home-page .game-card--ttt .game-icon { color: var(--accent-ttt); }
+body.home-page .game-card--snake .game-icon { color: var(--accent-snake); }
+body.home-page .game-card--login .game-icon { color: var(--accent-login); }
+
+body.home-page .game-card h2 {
+  font-size: 1.45rem;
+  font-weight: 700;
+  margin: 0 0 0.45rem;
+}
+
+body.home-page .game-card p {
+  color: var(--app-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  font-weight: 300;
+  margin: 0;
+}
+
+body.home-page .game-card .arrow {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 1.15rem;
+  opacity: 0.65;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+body.home-page .game-card:hover .arrow {
+  transform: translateX(-6px);
+  opacity: 1;
+}
+
+body.home-page .game-card.locked::after {
+  content: "🔒 לחץ להתחברות ולשחק";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.05rem;
+  border-radius: inherit;
+  z-index: 2;
+}
+
+.theme-light body.home-page .game-card.locked::after {
+  background: rgba(255,255,255,0.82);
+  color: var(--app-text);
+}
+
+body.home-page .skip-link {
+  position: absolute;
+  top: -120px;
+  right: 1rem;
+  padding: 0.75rem 1.2rem;
+  background: var(--accent-login);
+  color: #fff;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  z-index: 1000;
+  transition: top 0.2s ease;
+}
+
+body.home-page .skip-link:focus {
+  top: 1rem;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.5);
+}
+
+@media (max-width: 768px) {
+  body.home-page .container { padding: 3rem 1rem 2rem; }
+  body.home-page header { margin-bottom: 2.25rem; }
+  body.home-page .games-grid { grid-template-columns: 1fr; }
+  body.home-page .game-card { max-width: 100%; min-height: 180px; padding: 1.5rem; }
+  body.home-page .game-card h2 { font-size: 1.35rem; }
+  body.home-page .game-card p { font-size: 0.9rem; }
+}
+
+@media (max-width: 600px) {
+  body.home-page .container { padding: 2.5rem 0.75rem 1.5rem; }
+  body.home-page h1 { font-size: 1.75rem; }
+  body.home-page .subtitle { font-size: 1rem; }
+  body.home-page .game-card { padding: 1.25rem; min-height: 160px; }
+  body.home-page .game-icon { font-size: 2.5rem; }
+}
+
+@media (max-width: 480px) {
+  body.home-page .container { padding: 2rem 0.5rem 1rem; }
+  body.home-page h1 { font-size: 1.5rem; }
+  body.home-page .game-card h2 { font-size: 1.2rem; }
+  body.home-page .game-card p { font-size: 0.85rem; line-height: 1.5; }
+}
+
+@media (max-width: 360px) {
+  body.home-page .container { padding: 1.5rem 0.5rem 1rem; }
+  body.home-page .game-card { padding: 1rem; min-height: 140px; }
+  body.home-page .game-icon { font-size: 2.2rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.home-page .bg-pattern,
+  body.home-page h1,
+  body.home-page .game-card {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+

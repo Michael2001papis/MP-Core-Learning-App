@@ -35,6 +35,52 @@ body {
   overscroll-behavior: none;
 }
 
+/* Light mode — natural surfaces */
+.theme-light body {
+  background: var(--app-bg);
+  color: var(--app-text);
+}
+
+.theme-light .ttt-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: var(--app-border);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+}
+
+.theme-light #playerNames,
+.theme-light #scoreboard,
+.theme-light #modeSelector,
+.theme-light #victoryTable,
+.theme-light .victory-table-box,
+.theme-light .tictactoe {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: var(--app-border);
+}
+
+.theme-light #playerNames input,
+.theme-light #modeSelector select {
+  background: #fff;
+  border-color: var(--app-border);
+  color: var(--app-text);
+}
+
+.theme-light .game-stats,
+.theme-light .shortcuts-hint {
+  color: var(--app-muted);
+}
+
+.theme-light .btn-help {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: var(--app-border);
+  color: var(--app-muted);
+}
+
+.theme-light #stopBtn {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: var(--app-border);
+  color: var(--app-text);
+}
+
 .game-container {
   position: relative;
   text-align: center;
@@ -619,3 +665,4 @@ body .app-copyright-footer {
     animation: none;
   }
 }
+

@@ -36,6 +36,52 @@ body {
   overscroll-behavior: none;
 }
 
+/* Light mode — make it feel native (not “overlaid”) */
+.theme-light body {
+  background: var(--app-bg);
+  color: var(--app-text);
+}
+
+.theme-light .snake-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: var(--app-border);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+}
+
+.theme-light .game-hud,
+.theme-light .hud-item,
+.theme-light .leaderboard-box {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: var(--app-border);
+}
+
+.theme-light .hud-label,
+.theme-light .shortcuts-hint {
+  color: var(--app-muted);
+}
+
+.theme-light .hud-value {
+  color: #16a34a;
+}
+
+.theme-light .difficulty-inline select {
+  background: #fff;
+  border-color: var(--app-border);
+  color: var(--app-text);
+}
+
+.theme-light .controls-wrap .btn-reset {
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--app-text);
+  border-color: var(--app-border);
+}
+
+.theme-light .btn-help {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: var(--app-border);
+  color: var(--app-muted);
+}
+
 /* שלב 1+3 – מסך מלא, כרטיס מרכזי 800-1100px + Sticky footer */
 .snake-container {
   position: relative;
@@ -730,3 +776,4 @@ body .app-copyright-footer {
     animation: none;
   }
 }
+

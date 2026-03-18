@@ -210,7 +210,6 @@ function handleClick(btn) {
 
   turn = !turn;
 
-
   if (gameModeSelect.value === "pvc" && !turn) {
     setTimeout(computerMove, 400);
   }
@@ -419,3 +418,4 @@ function showMessage(msg, type = "success") {
   document.body.appendChild(toast);
   setTimeout(() => toast.remove(), 2500);
 }
+
